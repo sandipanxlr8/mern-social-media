@@ -11,7 +11,10 @@ import { fileURLToPath } from "url";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
+import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
+import { createPost } from "./controllers/posts.js";
+import { verifyToken } from "./middleware/auth.js";
 
 //CONFIGS
 const __filename = fileURLToPath(import.meta.url);
@@ -41,10 +44,12 @@ const upload = multer({ storage });
 
 // routes with files
 app.post("/auth/register", upload.single("picture"), register);
+app.post("/auth/register", verifyToken, upload.single("picture"), createPost);
 
 // routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 
 // test endpoint
 app.get("/", (req, res) => {
