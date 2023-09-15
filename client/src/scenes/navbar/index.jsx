@@ -31,7 +31,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const isNonMobileScreen = useMediaQuery("(min-width: 1000px)");
+  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
@@ -40,7 +40,8 @@ const Navbar = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const fullName = "dummy";
+  // const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -57,9 +58,9 @@ const Navbar = () => {
             },
           }}
         >
-          Socio
+          Social
         </Typography>
-        {isNonMobileScreen && (
+        {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}
             borderRadius="9px"
@@ -75,7 +76,7 @@ const Navbar = () => {
       </FlexBetween>
 
       {/* desktop nav */}
-      {isNonMobileScreen ? (
+      {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
           <IconButton
             onClick={() => dispatch(setMode())}
@@ -124,7 +125,7 @@ const Navbar = () => {
       )}
 
       {/* MOBILE NAV */}
-      {!isNonMobileScreen && isMobileMenuToggled && (
+      {!isNonMobileScreens && isMobileMenuToggled && (
         <Box
           position="fixed"
           right="0"
