@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    lcoation: String,
+    location: String,
     occupation: String,
     viewedProfile: Number,
     impressions: Number,
