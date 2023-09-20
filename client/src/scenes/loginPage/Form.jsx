@@ -48,6 +48,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
+  const [invalidCred, setInvalidCred] = useState(false);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -84,9 +85,14 @@ const Form = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
+    if (loggedInResponse.status === 400) {
+      setInvalidCred(true);
+      return;
+    }
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
+      setInvalidCred(false);
       dispatch(
         setLogin({
           user: loggedIn.user,
@@ -247,6 +253,11 @@ const Form = () => {
             >
               {isLogin ? "LOGIN" : "REGISTER"}
             </Button>
+            {invalidCred && (
+              <Typography fontWeight="300" variant="h5" sx={{ mb: "1.5rem" }}>
+                Invalid Email or Password.
+              </Typography>
+            )}
             <Typography
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");
