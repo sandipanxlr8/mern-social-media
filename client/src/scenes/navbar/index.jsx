@@ -6,10 +6,9 @@ import {
   Typography,
   Select,
   MenuItem,
-  FromControl,
+  FormControl,
   useTheme,
   useMediaQuery,
-  FormControl,
 } from "@mui/material";
 import {
   Search,
@@ -57,7 +56,7 @@ const Navbar = () => {
             },
           }}
         >
-          Social
+          Socials
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween
@@ -66,7 +65,7 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search here" />
+            <InputBase placeholder="Search..." />
             <IconButton>
               <Search />
             </IconButton>
@@ -74,13 +73,10 @@ const Navbar = () => {
         )}
       </FlexBetween>
 
-      {/* desktop nav */}
+      {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
-          <IconButton
-            onClick={() => dispatch(setMode())}
-            sx={{ fontSize: "25px" }}
-          >
+          <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
             ) : (
@@ -111,7 +107,7 @@ const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Logout</MenuItem>
+              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -187,7 +183,7 @@ const Navbar = () => {
                   <Typography>{fullName}</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
-                  Logout
+                  Log Out
                 </MenuItem>
               </Select>
             </FormControl>

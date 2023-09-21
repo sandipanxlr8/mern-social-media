@@ -33,39 +33,30 @@ export const addRemoveFriend = async (req, res) => {
     const user = await User.findById(id);
     const friend = await User.findById(friendId);
 
-    const friendIndex = user.friends.indexOf(friendId);
+    console.log("user with id : " + id + " " + user);
+    console.log("friend friendId : " + friendId + " " + friend);
 
-    if (friendIndex !== -1) {
-      // Friend is already present, so remove them
-      user.friends.splice(friendIndex, 1);
-
-      const userIndex = friend.friends.indexOf(id);
-      if (userIndex !== -1) {
-        // Remove the user from the friend's friend array
-        friend.friends.splice(userIndex, 1);
-        await friend.save();
-      }
+    if (user.friends.includes(friendId)) {
+      user.friends = user.friends.filter((id) => id !== friendId);
+      friend.friends = friend.friends.filter((id) => id !== id);
     } else {
-      // Friend is not present, so add them
       user.friends.push(friendId);
-
-      if (!friend.friends.includes(id)) {
-        // Add the user to the friend's friend array
-        friend.friends.push(id);
-        await friend.save();
-      }
+      friend.friends.push(id);
     }
-
     await user.save();
+    await friend.save();
 
-    const result = await User.findById(id).populate("friends");
-    const friends = result.friends.map(
+    const friends = await Promise.all(
+      user.friends.map((id) => User.findById(id))
+    );
+    const formattedFriends = friends.map(
       ({ _id, firstName, lastName, occupation, location, picturePath }) => {
         return { _id, firstName, lastName, occupation, location, picturePath };
       }
     );
-    res.status(200).json(friends);
+
+    res.status(200).json(formattedFriends);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(404).json({ message: err.message });
   }
 };
