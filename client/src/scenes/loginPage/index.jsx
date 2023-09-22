@@ -28,6 +28,11 @@ const LoginPage = () => {
         <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
           Welcome to Social, the social media for Socials!
         </Typography>
+        <Typography fontWeight="300" variant="h6" sx={{ mb: "1.5rem" }}>
+          Test Email : test@test.com
+          <br />
+          Password : test1234
+        </Typography>
         <Form />
       </Box>
     </Box>
